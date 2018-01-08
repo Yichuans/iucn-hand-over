@@ -1,0 +1,12 @@
+site_name: Handover World Heritage GIS Analyst 2017
+pages:
+   - Home: index.md
+   - Database: world-heritage-database.md
+   - Comparative analysis: comparative-analysis.md
+   - Geoprocessing: geoprocessing.md
+   - World Heritage Analyses: world-heritage-knowledge-lab.md
+   - World Heritage Outlook: world-heritage-outlook.md
+   - Presentation: presentation.md
+   - Folder structure: folder-structure.md
+theme: readthedocs
+
