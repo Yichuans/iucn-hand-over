@@ -148,12 +148,45 @@
               
                 <h1 id="introduction">Introduction</h1>
 <p>This section explains the <em>technical</em> side of my work, on analysis, maps and automation. </p>
-<p>The reason why much of my time has gone into the development, improvement and maintenance of the scripts is simple - next time the same task is requested again, I have an existing method, or previously working solution, that could be re-used or adapted. This saves time and increases my productivity</p>
+<p>The reason why much of my time has gone into the development, improvement and maintenance of the scripts is simple - next time the same task is requested again, I have an existing method, or previously working solution, that could be re-used or easily adapted. This saves time and increases productivity</p>
 <p>Wherever possible, I try to automate. In some cases, this obviously represents a poor investment of time, i.e., doing it manually step by step may be quicker. Automation for one-off tasks is over-engineering. I would argue, however, any time spent on making a tool, or spent on mastering a potentially more productive tool is a just investment that brings benefits in the long term. </p>
 <p>For example, the different implementations of the comparative analysis have led to a reduced workload significantly. See below a graph depicting the amount of days to do the spatial overlay between the plethora of datasets and new nominations. This frees time for species richness, irreplaceability, improved maps, just to name a few.</p>
 <p><img alt="time-spent-ca" src="../img/ca-time.png" /></p>
 <p>Some of the tasks present similar technical challenges. Especially for frequent, recurring tasks, it is imperative that I develop libraries or templates to minimise repetitive work, and that more time is made available for creative tasks and increased productivity. </p>
 <h1 id="geoprocessing-libraries">Geoprocessing libraries</h1>
+<p>The geoprocessing library  (located at <code>geoprocessing\library</code>) is a collection of commonly used functions, which evolve from specific solutions to tasks sharing similarities. Most of them relate to spatial analyses, usually involving the use of the <code>arcpy</code> library, which requires the installation of ArcGIS and a license. </p>
+<p>In order to use these libraries, the scripts need to be visible to Python. The easiest way to achieving this is to set system variable <code>PYTHONPATH</code> to include the <code>geoprocessing\library</code> path.</p>
+<p>The library consist the follow components:</p>
+<ol>
+<li><a href="https://github.com/Yichuans/geoprocessing/blob/master/library/Yichuan10.py">Yichuan10.py</a> holds a collection of mostly utility functions (with a humble and long history, starting with ArcGIS version 10, which still reflects in the name of the library). Commonly used functions include the two <a href="https://www.thecodeship.com/patterns/guide-to-python-function-decorators/">'decorators'</a> to track memory usage, and time required for executing functions, and the <code>GetUniqueValuesFromFeatureLayer_mk2</code> function that finds unique values in any given field in a feature layer. The latter simplifies the common task of finding unique IDs, such as the <code>wdpaid</code> for the WDPA or <code>id_no</code> for Red List.</li>
+</ol>
+<pre><code class="python">
+def GetUniqueValuesFromFeatureLayer_mk2(inputFc, inputField):
+    &quot;&quot;&quot;&lt;string&gt;, &lt;string&gt; -&gt; pythonList
+    can be both feature class or feature layer&quot;&quot;&quot;
+    pySet = set()
+    with arcpy.da.SearchCursor(inputFc, inputField) as cursor:
+        for row in cursor:
+            pySet.add(row[0])
+
+    return list(pySet)
+
+</code></pre>
+
+<ol>
+<li>
+<p><a href="https://github.com/Yichuans/geoprocessing/blob/master/library/YichuanDB.py">YichuanDB.py</a> includes a number of useful functions to connect and manipulate postgres databases. For the most part, I use the <code>ConnectionParameter</code> class to simplify making connections to the postgres database. Convenient functions like <code>clean_view</code> enables testing and debugging of the comparative analyses, which relies on direct access and manipulation of data in the database.</p>
+</li>
+<li>
+<p><a href="https://github.com/Yichuans/geoprocessing/blob/master/library/YichuanM.py">YichuanM.py</a> evolved from a suite of utility functions originally resided in the <code>Yichuan10.py</code> that specifically aimed at tasks relating to the automatic/batch production of maps (use pre-authored map template, to be discussed in detail in the <a href="#Map-batch-template">map batch template</a>)</p>
+</li>
+<li>
+<p><a href="https://github.com/Yichuans/geoprocessing/blob/master/library/YichuanRAS.py">YichuanRAS.py</a> contains functions that manipulates raster datasets (the rest on vectors) using both the <code>arcpy</code> but also <code>gdal</code>, an open source but more lower level alternative. Many of the functions here underpin the <a href="../world-heritage-knowledge-lab/#links-to-prototypes">analysis of landcover change</a> which was mostly implemented using <code>gdal</code></p>
+</li>
+<li>
+<p><a href="https://github.com/Yichuans/geoprocessing/blob/master/library/YichuanSR.py">YichuanSR.py</a> has many functions relating to coordinate systems. For example, the function <code>get_desirable_sr</code> tries to guess a best optimal coordinate system based on the geometry (the input expects <code>arcpy.Geometry</code> or <code>arcpy.Extent</code> object). This is useful to identify the most appropriate coordinate system when automating map productions - it's never a good idea to use a global coordinate system for a site scale map - use a specific UTM instead! NB. This function pre-dates a similar <a href="http://desktop.arcgis.com/en/arcmap/10.3/tools/cartography-toolbox/calculate-utm-zone.htm">CalculateUTMZone</a> function, now included by default in newer releases of ArcGIS.</p>
+</li>
+</ol>
 <h1 id="map-batching-template">Map batching template</h1>
 <h1 id="richness-template">Richness template</h1>
 <h1 id="parallel-template">Parallel template</h1>
