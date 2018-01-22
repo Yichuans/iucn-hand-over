@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>Geoprocessing - Handover World Heritage GIS Analyst 2017</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../css/highlight.css">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Geoprocessing";
+    var mkdocs_page_input_path = "geoprocessing.md";
+    var mkdocs_page_url = "/geoprocessing/";
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js"></script>
+  <script src="../js/modernizr-2.8.3.min.js"></script>
+  <script type="text/javascript" src="../js/highlight.pack.js"></script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> Handover World Heritage GIS Analyst 2017</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+	  
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="..">Home</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../world-heritage-database/">Database</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../comparative-analysis/">Comparative analysis</a>
+	    </li>
+          
+            <li class="toctree-l1 current">
+		
+    <a class="current" href="./">Geoprocessing</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l2"><a href="#introduction">Introduction</a></li>
+    
+
+    <li class="toctree-l2"><a href="#geoprocessing-libraries">Geoprocessing libraries</a></li>
+    
+
+    <li class="toctree-l2"><a href="#map-batching-template">Map batching template</a></li>
+    
+
+    <li class="toctree-l2"><a href="#richness-template">Richness template</a></li>
+    
+
+    <li class="toctree-l2"><a href="#parallel-template">Parallel template</a></li>
+    
+
+    <li class="toctree-l2"><a href="#generic-data-analysis">Generic data analysis</a></li>
+    
+
+    <li class="toctree-l2"><a href="#arcgis-and-anaconda">ArcGIS and Anaconda</a></li>
+    
+
+    <li class="toctree-l2"><a href="#miscellaneous">Miscellaneous</a></li>
+    
+
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../world-heritage-knowledge-lab/">World Heritage Analyses</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../world-heritage-outlook/">World Heritage Outlook</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../presentation/">Presentation</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../folder-structure/">Folder structure</a>
+	    </li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">Handover World Heritage GIS Analyst 2017</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+    
+    <li>Geoprocessing</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="introduction">Introduction</h1>
+<p>This section explains the <em>technical</em> side of my work, on analysis, maps and automation. </p>
+<p>The reason why much of my time has gone into the development, improvement and maintenance of the scripts is simple - next time the same task is requested again, I have an existing method, or previously working solution, that could be re-used or easily adapted. This saves time and increases productivity</p>
+<p>Wherever possible, I try to automate. In some cases, this obviously represents a poor investment of time, i.e., doing it manually step by step may be quicker. Automation for one-off tasks is over-engineering. I would argue, however, any time spent on making a tool, or spent on mastering a potentially more productive tool is a just investment that brings benefits in the long term. </p>
+<p>For example, the different implementations of the comparative analysis have led to a reduced workload significantly. See below a graph depicting the amount of days to do the spatial overlay between the plethora of datasets and new nominations. This frees time for species richness, irreplaceability, improved maps, just to name a few.</p>
+<p><img alt="time-spent-ca" src="../img/ca-time.png" /></p>
+<p>Some of the tasks present similar technical challenges. Especially for frequent, recurring tasks, it is imperative that I develop libraries or templates to minimise repetitive work, and that more time is made available for creative tasks and increased productivity. </p>
+<h1 id="geoprocessing-libraries">Geoprocessing libraries</h1>
+<p>The geoprocessing library  (located at <code>geoprocessing\library</code>) is a collection of commonly used functions, which evolve from specific solutions to tasks sharing similarities. Most of them relate to spatial analyses, usually involving the use of the <code>arcpy</code> library, which requires the installation of ArcGIS and a license. </p>
+<p>In order to use these libraries, the scripts need to be visible to Python. The easiest way to achieving this is to set system variable <code>PYTHONPATH</code> to include the <code>geoprocessing\library</code> path.</p>
+<p>The library consist the follow components:</p>
+<ol>
+<li><a href="https://github.com/Yichuans/geoprocessing/blob/master/library/Yichuan10.py">Yichuan10.py</a> holds a collection of mostly utility functions (with a humble and long history, starting with ArcGIS version 10, which still reflects in the name of the library). Commonly used functions include the two <a href="https://www.thecodeship.com/patterns/guide-to-python-function-decorators/">'decorators'</a> to track memory usage, and time required for executing functions, and the <code>GetUniqueValuesFromFeatureLayer_mk2</code> function that finds unique values in any given field in a feature layer. The latter simplifies the common task of finding unique IDs, such as the <code>wdpaid</code> for the WDPA or <code>id_no</code> for Red List.</li>
+</ol>
+<pre><code class="python">
+def GetUniqueValuesFromFeatureLayer_mk2(inputFc, inputField):
+    &quot;&quot;&quot;&lt;string&gt;, &lt;string&gt; -&gt; pythonList
+    can be both feature class or feature layer&quot;&quot;&quot;
+    pySet = set()
+    with arcpy.da.SearchCursor(inputFc, inputField) as cursor:
+        for row in cursor:
+            pySet.add(row[0])
+
+    return list(pySet)
+
+</code></pre>
+
+<ol>
+<li>
+<p><a href="https://github.com/Yichuans/geoprocessing/blob/master/library/YichuanDB.py">YichuanDB.py</a> includes a number of useful functions to connect and manipulate postgres databases. For the most part, I use the <code>ConnectionParameter</code> class to simplify making connections to the postgres database. Convenient functions like <code>clean_view</code> enables testing and debugging of the comparative analyses, which relies on direct access and manipulation of data in the database.</p>
+</li>
+<li>
+<p><a href="https://github.com/Yichuans/geoprocessing/blob/master/library/YichuanM.py">YichuanM.py</a> evolved from a suite of utility functions originally resided in the <code>Yichuan10.py</code> that specifically aimed at tasks relating to the automatic/batch production of maps (use pre-authored map template, to be discussed in detail in the <a href="#Map-batch-template">map batch template</a>)</p>
+</li>
+<li>
+<p><a href="https://github.com/Yichuans/geoprocessing/blob/master/library/YichuanRAS.py">YichuanRAS.py</a> contains functions that manipulates raster datasets (the rest on vectors) using both the <code>arcpy</code> but also <code>gdal</code>, an open source but more lower level alternative. Many of the functions here underpin the <a href="../world-heritage-knowledge-lab/#links-to-prototypes">analysis of landcover change</a> which was mostly implemented using <code>gdal</code></p>
+</li>
+<li>
+<p><a href="https://github.com/Yichuans/geoprocessing/blob/master/library/YichuanSR.py">YichuanSR.py</a> has many functions relating to coordinate systems. For example, the function <code>get_desirable_sr</code> tries to guess a best optimal coordinate system based on the geometry (the input expects <code>arcpy.Geometry</code> or <code>arcpy.Extent</code> object). This is useful to identify the most appropriate coordinate system when automating map productions - it's never a good idea to use a global coordinate system for a site scale map - use a specific UTM instead! NB. This function pre-dates a similar <a href="http://desktop.arcgis.com/en/arcmap/10.3/tools/cartography-toolbox/calculate-utm-zone.htm">CalculateUTMZone</a> function, now included by default in newer releases of ArcGIS.</p>
+</li>
+</ol>
+<h1 id="map-batching-template">Map batching template</h1>
+<h1 id="richness-template">Richness template</h1>
+<h1 id="parallel-template">Parallel template</h1>
+<h1 id="generic-data-analysis">Generic data analysis</h1>
+<h1 id="arcgis-and-anaconda">ArcGIS and Anaconda</h1>
+<h1 id="miscellaneous">Miscellaneous</h1>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../world-heritage-knowledge-lab/" class="btn btn-neutral float-right" title="World Heritage Analyses">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../comparative-analysis/" class="btn btn-neutral" title="Comparative analysis"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href="../comparative-analysis/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../world-heritage-knowledge-lab/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme.js"></script>
+      <script src="../search/require.js"></script>
+      <script src="../search/search.js"></script>
+
+</body>
+</html>
