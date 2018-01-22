@@ -309,14 +309,14 @@ def species_irreplaceability(x):
 <h1 id="static-maps">Static maps</h1>
 <p>Maps accompany the comparative analysis are authored using ArcMap, and later ArcPro. </p>
 <p>The template is pre-authored and re-used across all maps, although labelling and styles may be dynamically adjusted. To the extent possible, I try to automate the production of maps. In ArcMap, this is done via <code>arcpy.mapping</code> package that produces maps by iterating each feature in the nomination feature class. The export process outputs any format supported by ArcMap, usually in PNG for the reports or AI/EPS/PDF for printing. The source code could be found in the <a href="../geoprocessing/#map-batching-template">geoprocessing section</a></p>
-<p>Later, new capabilities in ArcPro make the above process obsolete. There is no need any more to write any code. The iteration instead require a pre-cooked extent feature class be create to represent the viewport of maps. The default data-driven pages can loop through each extent feature and export maps of desired formats. Worth mentioning is that PDF format maps also have the ability to turn on and off layers, that in a way mimics behaviours of a dynamic maps, giving readers powers to interrogate the map for information. </p>
+<p>Later, new capabilities in ArcPro make the above process obsolete. There is no need any more to write any code. The iteration instead require a pre-cooked extent feature class be create to represent the viewport of maps. The default data-driven pages can loop through each extent feature and export maps of desired formats. Worth mentioning is that PDF format maps also have the ability to turn on and off layers, that in a way mimics behaviours of a dynamic maps, giving readers powers to interrogate the map themselves for information. </p>
 <p>The 2017 static maps can be found below:</p>
 <ul>
 <li><a href="E:\Yichuan\Comparative_analysis_2017\static_maps">E:\Yichuan\Comparative_analysis_2017\static_maps</a></li>
 </ul>
 <h1 id="interactive-maps">Interactive maps</h1>
 <p>TO BE ADDED</p>
-<iframe width='640' height='400' frameborder='0' scrolling='no' marginheight='0' marginwidth="0" src='https://www.arcgis.com/apps/webappviewer/index.html?id=a0a336d33e854dd7b06e123e5390186e'></iframe>
+<iframe width='320' height='480' frameborder='0' scrolling='no' marginheight='0' marginwidth="0" src='https://www.arcgis.com/apps/webappviewer/index.html?id=a0a336d33e854dd7b06e123e5390186e'></iframe>
 
 <h1 id="conclusion">Conclusion</h1>
 <p>In hindsight, the analysis using intersections is slightly over-engineered. The original implementation relies entirely on SQLs, which had severe shortcomings that flow control was extremely inflexible in a pure SQL environment. Python, being a generic glue language, was picked to generate SQL statement and feed to the database management system. The result is a somewhat haphazard concoction of spaghetti codes, with unnecessarily engineered towards objective-oriented design. </p>

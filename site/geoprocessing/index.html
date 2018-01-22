@@ -82,7 +82,7 @@
     <li class="toctree-l2"><a href="#parallel-template">Parallel template</a></li>
     
 
-    <li class="toctree-l2"><a href="#generic-data-analysis">Generic data analysis</a></li>
+    <li class="toctree-l2"><a href="#new-data-analysis-process">New data analysis process</a></li>
     
 
     <li class="toctree-l2"><a href="#arcgis-and-anaconda">ArcGIS and Anaconda</a></li>
@@ -188,10 +188,207 @@ def GetUniqueValuesFromFeatureLayer_mk2(inputFc, inputField):
 </li>
 </ol>
 <h1 id="map-batching-template">Map batching template</h1>
+<p>Making maps quickly and automatically is essential. </p>
+<p>Imagine a map production task for a paper. Apart from the initial cartographic process, there will be repeat requests to adjust layout, styles, and <em>minor</em> details that entail massive changes, unknown except to the author of the map. Additionally, Usually, more than one map needs adjusting. Finally when it comes to printing or publishing, it is quite common to expect a different format to the one at hand already. These are legitimate requests, but the time and efforts required to address these challenges tend to go unnoticed.</p>
+<p>The map batching template attempts to offer a solution to make this process easier. These templates aim to address the two mundane scenarios below:</p>
+<ol>
+<li>from an ArcGIS Map Document (mxd file) to an exported map of a given format (e.g. pdf file). This is the same to someone clicking the export button and specify some export parameters</li>
+<li>from a single Map Document to a series of maps. Typically, for each feature of a given dataset, there will be an export map.</li>
+</ol>
+<p>The underlying technical solution to the above two scenarios involves the <code>Yichuan10.ExportMXDtoMap</code> function, which is a thin, for convenience wrapper around built-in map functions in the <code>arcpy.mapping</code> module. </p>
+<p>The process usually involves the below steps:</p>
+<ol>
+<li>pre-author a map (no need to turn on data driven pages)</li>
+<li>ensure there is an index layer with id, and map elements. They need to be specified and referenced in the map template (only applies to the second scenario).</li>
+</ol>
+<p>One common task in the first scenario is to export a folder of mxd documents, repeatedly with multiple formats. This could be easily achieved with a loop. </p>
+<p>Here is an <a href="https://github.com/Yichuans/geoprocessing/blob/master/mapbatch/batch_map_mxd_folders_publish.py">example</a> to export from a map document to a thumbnail, a map for web, and a map for use in Adobe Illustrator (AI format, for further editing and publication).</p>
+<p>The second scenario requires a loop to go through the feature class. Depending on its attributes or geometry, the map will then be different, for instance, in the title, extent indicator, spatial reference or on/off of a particular layer. For example, the scenario may be to create a map per species or per protected areas. In this sense it is less flexible and needs to be adapted to account for unique requirements that cannot be fully captured in a single, reusable template.</p>
+<p>For example, the <a href="https://github.com/Yichuans/geoprocessing/blob/master/mapbatch/mapbatcher_simple.py">simple map batcher</a> sets a definition query, a spatial reference, scale/extent, and then then export a jpg format map with a given resolution. See the snippet below</p>
+<pre><code class="python">exportpng = exportfolder + os.sep + str(each) + '.jpg'
+
+query = '\&quot;wdpaid\&quot; = ' + str(each)
+
+# only the above wdpaid feature visible
+layer_index.definitionQuery = query
+
+# set dataframe coordinate system
+sr =arcpy.SpatialReference()
+
+sr_string = Yichuan10.GetFieldValueByID_mk2(layer_index, each, value_field='utm')
+
+sr.loadFromString(sr_string)
+
+# load from its attribute
+df.spatialReference = sr
+
+df.extent = layer_index.getExtent()
+df.scale = df.scale * 1.1
+
+# need to specify a low quality
+arcpy.mapping.ExportToJPEG(mxd, exportpng, &quot;PAGE_LAYOUT&quot;, resolution = reso, jpeg_quality=60)
+</code></pre>
+
+<p>N.B. at the end of iteration, it is good practice to clear the definition query by specifying it to empty (e.g. in the above case, <code>layer_index.definitionQuery = ''</code>)</p>
+<p>Finally, it is not necessary to adapt the map batch template to automate the production of maps. ArcGIS has a built-in tool call <a href="http://desktop.arcgis.com/en/arcmap/10.3/map/page-layouts/what-are-data-driven-pages-.htm">data drive pages</a> or <a href="http://pro.arcgis.com/en/pro-app/help/layouts/map-series.htm">Map series</a> in ArcPro. Their use is beyond the scope of this handover. In comparison, data drive pages do not give a fine control, nor the same level of customisation that I required for my map production process.</p>
 <h1 id="richness-template">Richness template</h1>
+<p>The origin of this template goes back to 2010 when I was tasked with calculating richness (counting number of species) in the global hexagon grid. This forms part of the analysis published in paper titled <a href="http://science.sciencemag.org/content/330/6010/1503">The Impact of Conservation on the Status of the World’s Vertebrates</a>. I re-wrote and improved in Python from the original code written in VBA (by Nick?).</p>
+<p>The aim is to simply count the number of overlaying species in a given base layer, be it hexagons or protected areas. While conceptually simple, the implementation may not be straightforward - the beauty of this implementation in my opinion is two fold:</p>
+<ol>
+<li>only perform an intersection test</li>
+<li>only minimal information is recorded</li>
+</ol>
+<p>This means it does not require the computationally intensive calculation of actual intersections (think of <code>st_intersects</code> rather than <code>st_intersection</code>, see <a href="../st_intersects postgis">PostGIS documentation</a>), and it only records IDs, minimal information needed for subsequent analysis.</p>
+<p>The current implementation relies on the iterative <code>arcpy.SelectLayerByLocation_management</code> calls between a species layer and a base layer. For efficiency reasons, the species layer is created within each iteration by <code>arcpy.MakeFeatureLayer_management</code> with a given ID, and deleted after use; on the contrary, the base layer is re-used and resides in the memory persistently, until all iterations are complete. After the base layer is successfully 'selected', a data cursor loops through its record (<code>GetUniqueValuesFromFeatureLayer_mk2</code> works on a feature layer, and if that layer has a selection, it will only work on the selection) and saved as a list of strings (each representing a species id and a base layer id). It is formatted for eventual export to a csv file.</p>
+<pre><code class="python">def species_richness_calculation(id, hexagonLyr):
+
+    # make species layer
+    if type(id) in [str, unicode]:
+        exp = '\&quot;' + speciesID + '\&quot; = ' + '\'' + str(id) + '\''
+    elif type(id) in [int, float]:
+        exp = '\&quot;' + speciesID + '\&quot; = ' + str(id)
+    else:
+        raise Exception('ID field type error')
+
+    # make layers
+    arcpy.MakeFeatureLayer_management(speciesData, speciesLyr, exp)
+
+    # select by locations
+    arcpy.SelectLayerByLocation_management(hexagonLyr, overLapOption, speciesLyr)
+
+    # record it
+    hex_ids = GetUniqueValuesFromFeatureLayer_mk2(hexagonLyr, hexagonID)
+
+    result = list()
+
+    for hex_id in hex_ids:
+        result.append(str(int(id)) + ',' + str(hex_id) + '\n')
+
+    # get rid of layers
+    arcpy.Delete_management(speciesLyr)
+
+    return result
+</code></pre>
+
+<p>More recently, this template has been improved to utilise parallel processing to reduce time. ArcGIS cannot use more than one core at a time, so the challenge dictates dividing the task into smaller chunks for multiple ArcGIS processes, and then finally stitch together. The first parallel solution simply uses the <a href="#parallel-template">parallel template</a>, but later solutions incorporate further optimisation adjustment in the template to improve efficiency and add additional functionality. More specifically, it involves:</p>
+<ol>
+<li>Logger. Analysis with large, multi-source spatial data almost inevitably fail.</li>
+<li>Move the making layer logic to the worker. Making layer is expensive (time-consuming) - it is much fast for worker process to have a layer that they could re-use, without having to re-create for each iteration. It's a compromise between keep task-specific logic from the multi-processing template and achieving better efficiency.</li>
+</ol>
+<p>The original worker function</p>
+<pre><code class="python">def worker(q, q_out):
+    while True:
+        # monitoring
+        if q.qsize() %100 == 0:
+            print 'Remaining jobs:', q.qsize()
+
+        # get and ID from job id queue
+        job_id = q.get()
+        if job_id == 'STOP':
+            break
+
+        result = job(job_id)
+        q_out.put(result)
+</code></pre>
+
+<p>The adapted worker function. Note the <code>arcpy.MakeFeatureLayer_management</code> and <code>arcpy.Delete_management</code> that would otherwise occur in the <code>species_richness_calculation</code> function.</p>
+<pre><code class="python">def worker(q, q_out):
+    # make layer here to reduce overhead
+    arcpy.MakeFeatureLayer_management(hexagonData, hexagonLyr)
+
+    while True:
+        # monitoring
+        if q.qsize() %100 == 0:
+            print('Time:', datetime.datetime.now().time())
+            print('Remaining jobs:', q.qsize())
+
+        # get and ID from job id queue
+        job_id = q.get()
+        if job_id == 'STOP':
+            break
+
+        result = species_richness_calculation(job_id, hexagonLyr)
+        q_out.put(result)
+
+    arcpy.Delete_management(hexagonLyr)
+</code></pre>
+
+<p>The reduction in the time needed to undertake species richness analysis is significant - not quite linear reduction with the increase of CPU cores, but for my computer of 6 cores (12 threads) when specifying 10 worker process, it sees 7-8 times improvement. For example, the annual richness calculation itself for nomination + existing WH sites takes less than 3 hours, a previously unthinkable performance.</p>
+<p>Furthermore, due to its generic use case, attempts are being made to facilitate a uniform overlapping/binning process, with promising potentials.</p>
+<p>For example, by running both the richness calculation between WDPA and the global hexagon grid, and between RedList and the global hexagon grid, the intersection between WDPA and RedList could be easily obtained by using the grid as a look up table. This eliminates the need for complicated spatial overlays. Any further calculations have now reduced to non-spatial tabulation/pivot tables. </p>
+<p>The added benefits also include deferring decisions on groupings (for example, threatened species, or country/regional level statistics) towards a later time without re-doing the spatial overlay. This requires analysis be designed in the lowest possible granularity, that allows separation. </p>
+<p>For example, if a decision to select species range based on presence, origin and seasonality is to be deferred, the analysis must use the row id (usual <code>fid</code>) instead of the species id <code>id_no</code>. This is because <code>id_no</code> will make no effort to separate between polygons with presence 1 or presence 2 - it only differentiates species</p>
+<p>The <a href="http://nbviewer.jupyter.org/github/Yichuans/biodiversity-food-agriculture/blob/master/Biodiversity%20for%20food%20and%20agriculture.ipynb">biodiversity for food and agriculture analysis/BFA FAO analysis</a> is a good example with this thinking in mind(<a href="https://github.com/Yichuans/geoprocessing/blob/master/species_richness/FAO_BFA.py">script</a>)</p>
 <h1 id="parallel-template">Parallel template</h1>
-<h1 id="generic-data-analysis">Generic data analysis</h1>
+<p>The idea for this template comes from the need to speed up slow-running processes. In the old days, the richness calculation can be painstakingly slow: cutting the tasks to smaller chunks to run over a number of machines over a number of days is not a pleasant experience. Even with a small subset of protected areas, running for all Red List species remains a challenge. </p>
+<p>One of the bottleneck was that of the single process nature of ArcGIS Desktop - it does not take advantage of modern multi-core computers. The parallel template then started as a way of using Python to deploy multiple ArcGIS processes to distribute workload automatically.</p>
+<p>The process goes like:
+1. Create an input pipe containing a list of unique IDs. Each ID represents a piece of data
+2. Create an initially empty output pipe hosting result (will come from the worker processes)
+3. Create a number of worker processes, that actively get data from IDs in the input pip
+4. Create a worker process, that listens actively for get results from the output pipe and then processes them (write to an output file)
+5. The main function manages the pipes: distributes work, logs and waits for completion</p>
+<p><a href="https://github.com/Yichuans/geoprocessing/blob/master/snippet/multi_processing_template.py">This is the link to the template</a></p>
+<p>Notably, it needs to add the text string 'STOP' (or for that matter any flag signal would do as long as it is what the worker process would watch out for) to the input queue.</p>
+<pre><code class="python"># Add queue of a list of ids to process
+q = get_queue()
+
+# setup and run worker processes
+p_workers = list()
+for i in range(WORKER):
+    print 'Starting worker process:', i
+    p = multiprocessing.Process(target=worker, args=(q, q_out))
+    p_workers.append(p)
+
+# start
+for p in p_workers:
+    p.start()
+
+# add stop flag to the queue
+for p in p_workers:
+    q.put('STOP')
+</code></pre>
+
+<p>The worker process then remains alive until it sees the 'STOP' signal to terminate.</p>
+<pre><code class="python">def worker(q, q_out):
+    while True:
+        # monitoring
+        if q.qsize() %100 == 0:
+            print 'Remaining jobs:', q.qsize()
+
+        # get and ID from job id queue
+        job_id = q.get()
+        if job_id == 'STOP':
+            break
+
+        result = job(job_id)
+        q_out.put(result)
+</code></pre>
+
+<h1 id="new-data-analysis-process">New data analysis process</h1>
+<p>It is not really 'new' - but I still have not seen a wide adoption of this novel process being applied in conservation analysis at IUCN or WCMC. </p>
+<p>This is an improved work flow that I increasingly use. Typically it begins with a spatial analysis, but only once. All subsequent analyses and visualisation then take place within a <a href="http://jupyter.org">Jupyter notebook</a>. For routine analyses, this process seems to work very well, as long as the initial spatial analysis is designed in such a way (with the smallest granularity) that allow further interrogation of data with non-spatial analyses.</p>
+<p>The benefits of this process:</p>
+<ol>
+<li>less error prone as a result from spatial analysis. Spatial analysis is done only once at the smallest granularity</li>
+<li>further questions of different aggregations can be answered with a non-spatial analysis (as long as the scale is higher than what's used in the spatial analysis)</li>
+<li>methodology is fully open, and reproducible with little effort (apart from the initial spatial analysis)</li>
+<li>the entire analytical process: data cleaning, analysis, and visualisation is fully documented and can easily be shared</li>
+</ol>
+<p>Example analyses:</p>
+<ol>
+<li><a href="http://nbviewer.jupyter.org/github/yichuans/climate-vulnerable-wh/blob/master/workspace.ipynb">Climate change vulnerability analysis</a> and the <a href="http://nbviewer.jupyter.org/github/yichuans/climate-vulnerable-wh/blob/master/report.ipynb">writing of report</a></li>
+<li><a href="http://nbviewer.jupyter.org/github/yichuans/world-heritage-outlook-analysis/blob/master/analysis.ipynb">World Heritage Outlook 2 analysis</a></li>
+<li><a href="http://nbviewer.jupyter.org/github/yichuans/biodiversity-food-agriculture/blob/master/Biodiversity%20for%20food%20and%20agriculture.ipynb">Biodiversity for food and agriculture</a></li>
+<li><a href="http://nbviewer.jupyter.org/github/yichuans/wilderness-wh/blob/master/wilderness_analysis.ipynb">Wilderness analysis</a> and the <a href="http://nbviewer.jupyter.org/github/yichuans/wilderness-wh/blob/master/WH%20marine%20wilderness%20methodology.ipynb">writing of methodology</a></li>
+<li><a href="http://nbviewer.jupyter.org/github/yichuans/icca-study/blob/master/analysis.ipynb">ICCA species richness</a></li>
+</ol>
 <h1 id="arcgis-and-anaconda">ArcGIS and Anaconda</h1>
+<p>Of course, there is no reason why the spatial analysis should be excluded from this process. Thus, the entire work flow of data, analysis and result could be theoretically included in a single workspace such as a Jupyter notebook. </p>
+<p>The main challenge is for the generic Python and its libraries to talk to ArcGIS and vice versa. The problem is that ArcGIS uses a specific version of python and its numerical libraries, which cannot be updated without breaking the ArcGIS installation (when using <code>arcpy</code> for example).</p>
+<p><a href="https://www.anaconda.com">Anaconda</a>, the most popular Python data science platform, can be used to create an environment to satisfy a specific installation of ArcGIS with compatible versions of other libraries.</p>
+<p>USGS has a useful guide on <a href="https://my.usgs.gov/confluence/display/EGIS/Using+Anaconda+modules+from+the+ESRI+python+environment">how to use anaconda modules from the esri Python environment</a> to set up such a environment.</p>
+<p>Lastly, this may work for small spatial analyses, however, I would argue for the geoprocessing we require (takes hours or even days) this may not be a good idea. Spatial as such analyse tends to fail a couple of times and require significant back and forth manual experimenting and fixing of data - these would be better off dealt with separately.</p>
 <h1 id="miscellaneous">Miscellaneous</h1>
               
             </div>

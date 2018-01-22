@@ -288,4 +288,6 @@ USGS has a useful guide on [how to use anaconda modules from the esri Python env
 
 Lastly, this may work for small spatial analyses, however, I would argue for the geoprocessing we require (takes hours or even days) this may not be a good idea. Spatial as such analyse tends to fail a couple of times and require significant back and forth manual experimenting and fixing of data - these would be better off dealt with separately.
 
+I adapted a [customised script](https://github.com/Yichuans/geoprocessing/blob/master/usercustomize.py) (authored by [Curtis Price](mailto:cprice@usgs.gov)) for my system to connect ArcGIS and Anaconda
+
 # Miscellaneous

@@ -1,14 +1,14 @@
 # History
 
-I built the first prototype of the Outlook assessment module in Python (Web2Py framework), as proof of concept. The underlying principle is to store the results of assessment in a database so that it could be managed and analysed more easily and effectively. A database approach is the only way to systematically manage the data the project generates.
+I built the first prototype of the Outlook assessment module in Python (Web2Py framework) in early 2012, as proof of concept. The underlying principle is to store the results of assessment in a database so that it could be managed and analysed more easily and effectively. A database approach is the only way to systematically manage the data the project generates.
 
-For the development, RSMI was commissioned to undertake the design, implementation and maintenance of the three modules: assessment, site information, and front-end website for showcasing findings. In hindsight, it was an unrealistic ambition with impossible funds, but at the time the can-do spirit prevailed and I was technically in-mature and inexperienced as to make do with developing everything, rather than reality check and focusing on the minimally viable product.
+For the development, RSMI was commissioned to undertake the design, implementation and maintenance of the three modules: assessment, site information, and front-end website for showcasing findings. In hindsight, it was an unrealistic ambition with impossible funds, but at the time the can-do spirit prevailed and I was technically in-mature and inexperienced as to make do with developing everything, rather than checking reality and focusing on the minimally viable product.
 
-In hindsight, part of the reason was that the roles were never clear, I think I was given the role of project management, yet I had no power in making design choices nor allocate funds. My role became an inefficient intermediate - I led numerous consultations with the team during every milestone, and had constant struggles to accommodate opinions and then feed to the developers. The decision making process was unnecessarily long and painful. The team was tired and so was I. 
+It was not the success I had hoped for - part of the reason was that the roles were never clear, I think I was given the role of project management, yet I had no power in making design choices nor allocate funds. My role became an inefficient intermediate - I led numerous consultations with the team during every milestone, and had constant struggles to accommodate opinions and then feed to the developers. The decision making process was unnecessarily long and painful.
 
-Despite the hiccups along the way, a product was developed with all three modules, albeit late. The database played a major role to fulfilling the requirement of data analysis. I built the pipelines from database dumps to queries that output assessments, and then turn into usable formats. These powered the first outlook report.
+Despite the hiccups along the way, a product was developed with all three modules, albeit late. The database played a major role to fulfilling the requirement of data analysis. I built the pipelines from database dumps to queries that output assessments, and then turn into usable formats. They powered the first Outlook report.
 
-My role in the second development is a technical advisory one and not involved in the daily management of the development.
+My role in the second development is technical advisory and I am not involved in the daily management of the development.
 
 # Technical architecture
 
@@ -33,7 +33,7 @@ In order to assess these instances (use SSH), you will need 'private keys'. The 
 The keys may be revoked in the [AWS management console](https://aws.amazon.com). The login credentials are:
 
 - Yichuan.shi@iucn.org
-- *(see my last email)*
+- (see email)
 
 You may copy and send 'keys' to developers so that they have access to the servers, however, I would highly recommend **not** giving external people access to our Amazon AWS account.
 
