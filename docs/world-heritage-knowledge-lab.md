@@ -15,11 +15,11 @@ Here are a few links on the thinking:
 
 # Platform
 
-While far from being complete, the World Heritage Analysis (hereafter refer to as the Lab) is not just a portal website with links pointing to each product - it is designed to be the central place to foster a mechanism that allows ideas to be prototyped, tested, scrutinised and, as a platform to raise funds for their eventual departure to become fully fledged product or services.
+While far from being complete, the World Heritage Analyses (hereafter refer to as the Lab) is not just a portal with links directing to each product or prototype - it is designed to be the central place to foster a mechanism that allows ideas to be prototyped, tested, scrutinised and, as eventually a platform to raise funds for their eventual departure to become fully fledged product or services.
 
-As it stands, it lacks the central pull factor to bring in more traffic and thus potential interest. This may be due to the lack of a usable feedback system, a small scope that appeals to a small audience and possibly also lacking effective promotion. 
+As it stands, it lacks the central pull factor to bring in more traffic and potential interest. This may be due to the lack of a usable feedback system, a limited scope that appeals to only a small audience, and possibly also lacking effective promotion. 
 
-Most of the traffic come from new users, and a large majority visit the [datasheets](https://yichuans.github.io/datasheet/output/), a well established product before its appearance as an online service
+Most of the traffic come from new users, and a large majority visit the [datasheets](https://yichuans.github.io/datasheet/output/), a well established product before its rebirth as an online service
 
 ![user](./img/wha-user.png)
 
@@ -47,7 +47,7 @@ Full documentation of the World Heritage Analysis can be found on the GitHub bel
 
 - [Comparative analysis](http://whca.yichuans.me/) | [Source on Github](https://github.com/Yichuans/comparative-analysis-online)
 
-- [Information sheet](https://yichuans.github.io/datasheet/output/) | [Source on Github](https://github.com/Yichuans/datasheet)
+- [WCMC datasheet/Information sheet](https://yichuans.github.io/datasheet/output/) | [Source on Github](https://github.com/Yichuans/datasheet)
 
 - [Global surface water](https://yichuans413.appspot.com) | [Source on Github](https://github.com/Yichuans/gee-surface-water)
 

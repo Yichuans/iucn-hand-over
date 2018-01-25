@@ -6,6 +6,7 @@ pages:
    - Geoprocessing: geoprocessing.md
    - World Heritage Analyses: world-heritage-knowledge-lab.md
    - World Heritage Outlook: world-heritage-outlook.md
+   - Datasheet: datasheet.md
    - Presentation: presentation.md
    - Folder structure: folder-structure.md
 theme: readthedocs
