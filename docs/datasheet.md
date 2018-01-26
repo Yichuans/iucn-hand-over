@@ -1,11 +1,10 @@
 # Introduction
 
-Throughout the past four decades UNEP-WCMC has inherited [a legacy of datasheets](http://old.unep-wcmc.org/world-heritage-information-sheets_271.html), records that cover consistently a wide variety of topics for each and every natural World Heritage site. While still available in the new website as '[information sheets]
-(https://www.unep-wcmc.org/resources-and-data/world-heritage-information-sheets)', the current state of such valuable information is fragmented, and their usefulness has been severely limited by the lack of access.
+Throughout the past four decades UNEP-WCMC has inherited [a legacy of datasheets](http://old.unep-wcmc.org/world-heritage-information-sheets_271.html), records that cover consistently a wide variety of topics for each and every natural World Heritage site. While still available in the new website as [information sheets](https://www.unep-wcmc.org/resources-and-data/world-heritage-information-sheets), such valuable information is fragmented, and their usefulness has been severely limited by the lack of access.
 
->'If we make them hard to find, people will not use them'
+> If we make the datasheets hard to find, people will not use them
 
-The overhaul of datasheets has been ongoing since I joined the World Heritage Programme in 2011. However, it is not until late 2017, with the help of many interns, this work finally concludes as a prototype, and is made accessible online. 
+The overhaul of datasheets has been ongoing since I joined the World Heritage Programme in 2011. However, it is not until late 2017, with the help of many interns, this work finally concludes as a prototype, and made accessible online. 
 
 # Challenge
 

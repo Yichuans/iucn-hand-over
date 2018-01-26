@@ -1,6 +1,7 @@
-site_name: Handover World Heritage GIS Analyst 2017
+site_name: Handover World Heritage GIS
 pages:
    - Home: index.md
+   # - sections:
    - Database: world-heritage-database.md
    - Comparative analysis: comparative-analysis.md
    - Geoprocessing: geoprocessing.md
@@ -9,5 +10,7 @@ pages:
    - Datasheet: datasheet.md
    - Presentation: presentation.md
    - Folder structure: folder-structure.md
-theme: readthedocs
-
+# theme: readthedocs
+# theme: windmill
+theme:
+  name: 'material'
