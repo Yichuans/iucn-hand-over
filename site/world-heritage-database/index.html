@@ -94,6 +94,11 @@
           
             <li class="toctree-l1">
 		
+    <a class="" href="../datasheet/">Datasheet</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
     <a class="" href="../presentation/">Presentation</a>
 	    </li>
           
@@ -135,12 +140,12 @@
             <div class="section">
               
                 <h1 id="introduction">Introduction</h1>
-<p>For the most part, the database host the natural World Heritage sites boundary, along with other relevant auxiliary information such as criteria, types and endangered status. </p>
-<p>It was originally built to power the comparative analyses, but at the same time serves as a pipe to other formats, for example, for inclusion in the WDPA, shapefile/geodatabase feature class, the <a href="https://wcmc.io/world-heritage-data">World Heritage Feature service</a>(via data dumps)</p>
-<p>The management of the database is noticeably different from other datasets in the WDPA. Rather than using the proprietary esri ArcGIS suite, it resides in an open source enterprise database called <a href="https://www.postgresql.org">PostgreSQL</a> with the <a href="http://postgis.org">PostGIS</a> spatial extension. Apart from having no lock-in or dependency on potentially expensive commercial software, this allows an industry standard, and free way to manage data using the SQL language.</p>
+<p>For the most part, the database hosts the natural World Heritage sites boundary, i.e., the actual GIS data, and other relevant, essential information such as criteria, types and endangered status. </p>
+<p>It was originally built to power the comparative analyses, but at the same time serves as a pipeline to other formats, for example, for inclusion in the WDPA, shapefile/geodatabase feature class, the <a href="https://wcmc.io/world-heritage-data">World Heritage Feature service</a>(via data dumps)</p>
+<p>The management of the database is noticeably different from other datasets in the WDPA. Rather than using the proprietary esri ArcGIS suite, it sits in an open source enterprise database <a href="https://www.postgresql.org">PostgreSQL</a> with the <a href="http://postgis.org">PostGIS</a> spatial extension. The key benefit, apart from having no lock-in or dependency on expensive commercial software, is that the data can be managed in an industry standard way, and freely, using the SQL language.</p>
 <h1 id="postgresql-database">PostgreSQL database</h1>
-<p>This section explains the technical details behind the database.</p>
-<p>Technical specification</p>
+<p>This section explains the technical details of the database.</p>
+<p>Technical specification:</p>
 <ul>
 <li>Software: PostgreSQL 9.1.14 and PostGIS 1.5 (up since 2013?)</li>
 <li>Server: WCMC-PC-01918</li>
@@ -150,23 +155,25 @@
 <li>Username: postgres</li>
 <li>Password: (see email)</li>
 </ul>
-<p>Unfortunately, being a generic database and while good at managing data, PostgreSQL/PostGIS does not have a GUI(graphic user interface) that allow easy visualisation and tools to create, update or delete spatial data. ArcGIS on the other hand excels at such tasks.</p>
-<p>To make the best of two worlds, a compromised solution was engineered to allow ArcGIS to interface with the underlying database. It was not an easy solution back in the days but some of the <a href="http://desktop.arcgis.com/en/arcmap/10.3/manage-data/gdbs-in-postgresql/data-types-postgresql.htm">techniques</a> may have become obsolete over time - therefore I intend not to complicate matters by explaining <em>how to set up</em> but rather focusing on <em>how to use</em>.</p>
-<p>Here are the principles when using the database.</p>
+<p>Unfortunately, being only a database, PostgreSQL/PostGIS does not have a GUI(graphic user interface) that allow read, create, update or delete spatial data, essential tasks for a GIS, which ArcGIS excels in.</p>
+<p>To make the best of two worlds, a compromised solution was engineered to allow ArcGIS to interface with the underlying database. It was not an easy solution back in the days and some of the <a href="http://desktop.arcgis.com/en/arcmap/10.3/manage-data/gdbs-in-postgresql/data-types-postgresql.htm">techniques</a> may have become obsolete over time. There are probably better options these days - therefore I intend not to complicate matters by explaining <em>how to set up</em> the system as is, but rather focusing on <em>how to use</em> the system.</p>
+<p>Here are the guiding principles when using the database.</p>
 <ol>
-<li>Use ArcGIS (ArcCatalog) to add, modify and delete World Heritage data</li>
-<li><strong>Exercise caution</strong> when using PostgreSQL to modify information specifically managed by ArcGIS, notably in the <code>sde</code> schema, as they might irreversibly corrupt the data, rendering the ArcGIS interface to fail. For example, <strong>never delete</strong> World Heritage tables in the <code>sde</code> schema in PostgreSQL directly!</li>
+<li>Use ArcGIS (ArcCatalog) to view, add, modify and delete World Heritage data</li>
+<li><strong>Exercise caution</strong> when using PostgreSQL to <strong>modify</strong> information specifically managed by ArcGIS, notably in the <code>sde</code> schema, as they might irreversibly corrupt the data, rendering the ArcGIS interface unusable. For example, <strong>never delete</strong> World Heritage tables in the <code>sde</code> schema in PostgreSQL directly!</li>
+<li>Create spatial functions in views, such as <code>st_intersects</code>, in PostgreSQL/PostGIS to analyse data, instead of using equivalent ArcGIS functions (really, this is the main reason for the setup!)</li>
 </ol>
 <p>What is in the <code>sde</code> schema?</p>
+<p>The schema is effectively managed by the ArcSDE (Spatial Database Engine), a middleware bridging between the ArcGIS and the underlying enterprise level database. One important thing to note is that in order for the database to work both ways, <code>PG_Geometry</code> must be specified as the type. If not, by default the native ArcGIS geometry would be use, which PostgreSQL/PostGIS will <strong>not</strong> be able to recognise and use.</p>
 <ol>
 <li>
-<p><code>b_wh_iso_geom</code>: the single most important table. It holds boundary data, including historical records. Each site, identified uniquely by <code>wdpaid</code>, may have several boundaries or geometries, depending on their history of modification or updates. The system relies on the <code>year</code> and <code>event_cat</code> fields to find the most recent boundary. This table also features <code>iso3</code> field to differentiate transboundary site, enabling easy aggregation of country specific statistics</p>
+<p><code>b_wh_iso_geom</code>: the single most important table, with the geometry field. It holds boundary data, including past records since 2013 (when the migrate to this system happened). Each site, identified by the id <code>wdpaid</code>, may have multiple records, i.e. several boundaries or geometries, depending on the number of past modification or updates. The system relies on the <code>year</code> and <code>event_cat</code> fields to find the most recent boundary. This table also features the <code>iso3</code> field to differentiate transboundary site, enabling easy aggregation of country level statistics</p>
 </li>
 <li>
-<p><code>b_wh_attr</code>: the non-spatial attributes, including names, status_year (first inscription) and reported areas</p>
+<p><code>b_wh_attr</code>: non-spatial attributes, including names, status_year (first inscription) and reported areas</p>
 </li>
 <li>
-<p><code>b_wh_ids</code>: a mapping of <code>wdpaid</code> and <code>unesid</code>, a different set of ids referencing the systems used by UNESCO</p>
+<p><code>b_wh_ids</code>: a mapping of <code>wdpaid</code> and <code>unesid</code>, which is a different set of ids referencing the systems used by UNESCO</p>
 </li>
 <li>
 <p><code>b_wh_crit</code>: a mapping of <code>wdpaid</code> and <code>crit</code>, useful for grouping results based on criteria</p>
@@ -175,45 +182,44 @@
 <p><code>b_wh_region</code>: country name, unesco regions and subregions</p>
 </li>
 <li>
-<p><code>blk_crit</code>: a lookup table converting numeric number and Roman letter for criteria</p>
+<p><code>blk_crit</code>: a lookup table converting numeric numbers and Roman letters (useful for the <code>crit</code> field)</p>
 </li>
 <li>
-<p><code>tag_unesco_xxx</code>: tags for unesco dangered status, forest and marine</p>
+<p><code>tag_unesco_xxx</code>: tags for UNESCO dangered status, forest and marine</p>
 </li>
 </ol>
-<p>The above form the basis for the World Heritage database. While these are the tables to update, after committee decisions, however, direct uses of the above may be inconvenient or difficult. </p>
-<p>For this purpose, a set of convenient views (consider them as temporary or dynamic tables) have been created and placed under the <code>arcgis</code> schema.</p>
-<p>What is in the <code>arcgis</code> schema?</p>
+<p>The above tables form the basis of the World Heritage database, however, the direct use of them may be inconvenient or difficult, and thus is discouraged. </p>
+<p>For the purpose of using the database, a set of convenient views (consider them as temporary or dynamic tables) have been created and placed under the <code>arcgis</code> schema. They are higher-level and more commonly used. </p>
 <ol>
 <li><code>v_wh_spatial</code>: a feature class like view, with similar WDPA fields. This builds on the <code>v_wh_iso_geom_latest</code> and other relevant information</li>
-<li><code>v_wh_spatial_non_agg</code>: the same as above but transboundary sites are recorded separately by country, i.e., not aggregated.</li>
-<li><code>v_wh_iso_geom_latst</code>: contains the latest geometry from the <code>sde.b_wh_iso_geom</code> table</li>
-<li><code>v_wh_non_spatial_xxx</code>: like <code>v_wh_spatial</code> but without the geometry field - faster view as it does not require any geometry</li>
+<li><code>v_wh_spatial_non_agg</code>: the same as above but transboundary sites are recorded as separate entities, i.e., not aggregated as one geometry.</li>
+<li><code>v_wh_iso_geom_latst</code>: the latest geometry for each site (queried from the <code>sde.b_wh_iso_geom</code> table)</li>
+<li><code>v_wh_non_spatial_xxx</code>: like <code>v_wh_spatial</code> but without the geometry field - faster view as it does not retrieve any geometry</li>
 <li><code>v_wh_geojson</code>: geojson format export</li>
-<li><code>dump_v_wh_for_wdpa</code>: feature class export, with WDPA attributes</li>
+<li><code>dump_v_wh_for_wdpa</code>: feature class export, for inclusion in the WDPA</li>
 </ol>
 <p>These views can be inspected within a database management environment such as <a href="https://www.pgadmin.org">PgAdmin</a>, exported to other formats (CSV, shapefiles or others), or open directly in the ArcGIS environment via a <a href="http://desktop.arcgis.com/en/arcmap/10.3/manage-data/databases/database-connections-desktop.htm">database connection</a>. Since they are dynamically generated views, as long as the underlying data are up-to-date, they always reflect the latest in the database.</p>
 <h1 id="how-to-update-the-database">How-to: update the database</h1>
-<p>The database is updated annually after the conclusion of World Heritage Committee meeting, in July or August. This ensures decisions on nominations and modifications are timely reflected. I also take this opportunity to consider improved/higher accuracy boundaries of other sites, for example, submitted by States Parties via updates to the WDPA.</p>
-<p>To update the database, you may go directly to the database but it is less straightforward and requires a higher level of technical sophistication. This method usually involving using command line tools such as <code>psql</code> and <code>shape2pgsql</code> to convert input updating shapefiles (see <a href="http://www.bostongis.com/pgsql2shp_shp2pgsql_quickguide.bqg">PostGIS pgsql2shp shp2pgsql cheetsheet</a>), and then issue SQL commands directly to add or modify records in relevant tables under the <code>sde</code> schema.</p>
-<p>For example, the below import a updating shapefile to a temporary location</p>
+<p>I update the database annually, after the conclusion of World Heritage Committee meeting, in July or August. This ensures decisions on nominations and modifications are timely reflected. I also take this opportunity to incorporate improved boundaries (usually higher accuracy) for other sites, for example, those submitted by States Parties as part of their updates to the WDPA.</p>
+<p>To update the database, one may go directly to the database without using ArcGIS, but it is less straightforward and requires a higher level of technical sophistication. This method usually involves using command line tools such as <code>psql</code> and <code>shape2pgsql</code> to convert input shapefiles (see <a href="http://www.bostongis.com/pgsql2shp_shp2pgsql_quickguide.bqg">PostGIS pgsql2shp shp2pgsql cheetsheet</a>) to SQL statements, and then issue separate SQL commands directly to add or modify records in relevant tables under the <code>sde</code> schema.</p>
+<p>For example, the below command imports a shapefile to a staging location in the database</p>
 <pre><code class="bash">shp2pgsql -g geom -s 4326 -I -w &quot;LATIN1&quot; E:\Yichuan\sites2013\edit_38COM.shp public.z_updategeom | psql -p 5432 -d whs_v2 -U postgres
 </code></pre>
 
-<p>As a design feature for convenience, use ArcGIS to update the database. There is an esri map template for this purpose. For example, the 2017 updates can be found at:</p>
+<p>I recommend using ArcGIS to interface with the database - it is a design feature for convenience. Use editing tools in ArcGIS to update the database (as you would normally do with any spatial data). For further convenience, I created an esri map template for this purpose. For example, the 2017 updates can be found at:</p>
 <ul>
 <li><a href="E:\Yichuan\sites2016\inscription\inscription.mxd">E:\Yichuan\sites2016\inscription\inscription.mxd</a></li>
 </ul>
 <p>Ensure all <code>sde.b_xxx</code>, <code>sde.tag_xxx</code> and <code>sde.ref_iso3</code> tables are updated.</p>
 <h1 id="statistics">Statistics</h1>
-<p>Statistics are placed under the <code>arcgis</code> schema. They involve: total World Heritage area and average size in sqkm, number of sites, by forest, marine, danger listing.</p>
+<p>Being database views, statistics reflect automatically and dynamically from the latest dataset. They are placed under the <code>arcgis</code> schema, and involve: total World Heritage area and average size (in sqkm), number of sites, categories such as forest, marine, danger listing. Since the summaries share similar traits, I re-used the same logic but produced statistics at different levels. The statistics are mainly for the <a href="https://www.iucn.org/theme/world-heritage/natural-sites/facts-and-figures">World Heritage factsheet</a> (it requires additional information about global statistics from the WDPA)</p>
 <ul>
 <li><code>stats_wh_site</code>: site level</li>
 <li><code>stats_wh_country</code>: country level</li>
 <li><code>stats_wh_region</code>: regional level</li>
 <li><code>stats_wh_world</code>: global level</li>
 </ul>
-<p>Marine and terrestrial statistics require an ad-hoc spatial analysis, as geometry is not saved as split entities between the two environments. The result can be found in the <code>arcgis.intersect_wh_wvs</code>. For convenience, a table <code>t_intersect_wh_wvs_xxx</code> created to save time.</p>
+<p>Marine and terrestrial statistics require an ad-hoc spatial analysis, as site boundaries are not saved as split entities between the two realms. The result can be found in the <code>arcgis.intersect_wh_wvs</code>. This view takes a very long time to open due to significant work involving geometric operations. For convenience, I would recommend a table <code>t_intersect_wh_wvs_xxx</code> be created (and replace the old table) to save time - it makes subsequent queries a breeze...</p>
               
             </div>
           </div>
