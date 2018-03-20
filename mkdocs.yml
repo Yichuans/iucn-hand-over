@@ -11,6 +11,6 @@ pages:
    - Presentation: presentation.md
    - Folder structure: folder-structure.md
 # theme: readthedocs
-# theme: windmill
-theme:
-  name: 'material'
+theme: windmill
+# theme:
+#   name: 'material'
