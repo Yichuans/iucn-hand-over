@@ -1,308 +1,147 @@
-
-
-
-
 <!DOCTYPE html>
-<html lang="en" class="no-js">
-  <head>
-    
-      <meta charset="utf-8">
-      <meta name="viewport" content="width=device-width,initial-scale=1">
-      <meta http-equiv="x-ua-compatible" content="ie=edge">
-      
-      
-      
-      
-        <meta name="lang:clipboard.copy" content="Copy to clipboard">
-      
-        <meta name="lang:clipboard.copied" content="Copied to clipboard">
-      
-        <meta name="lang:search.language" content="en">
-      
-        <meta name="lang:search.result.none" content="No matching documents">
-      
-        <meta name="lang:search.result.one" content="1 matching document">
-      
-        <meta name="lang:search.result.other" content="# matching documents">
-      
-        <meta name="lang:search.tokenizer" content="[\s\-]+">
-      
-      <link rel="shortcut icon" href="./assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-0.17.2, mkdocs-material-2.5.3">
-    
-    
-      
-        <title>Handover World Heritage GIS</title>
-      
-    
-    
-      <link rel="stylesheet" href="./assets/stylesheets/application.aa3de92b.css">
-      
-    
-    
-      <script src="./assets/javascripts/modernizr.1aa3b519.js"></script>
-    
-    
-      
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700|Roboto+Mono">
-        <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
-      
-      <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    
-    
-    
-  </head>
+<html lang="en">
+<head>
   
   
-    <body dir="ltr">
-  
-    <svg class="md-svg">
-      <defs>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="None">
+    
+    
+    <link rel="shortcut icon" href="./img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Handover World Heritage GIS</title>
+    <link href="./css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="./css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="./css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="./css/highlight.css">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="./js/jquery-3.2.1.min.js"></script>
+    <script src="./js/bootstrap-3.3.7.min.js"></script>
+    <script src="./js/highlight.pack.js"></script>
+    
+      <script src="./js/elasticlunr.min.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '.';
+      var is_top_frame = (window === window.parent);
         
+        var pageToc = [
+          {title: "About", url: "#about", children: [
+          ]},
+          {title: "Acknowledgement", url: "#acknowledgement", children: [
+          ]},
+        ];
+
+    </script>
+    <script src="./js/base.js"></script>
+      <script src="./search/require.js"></script>
+      <script src="./search/search.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+<nav class="navbar wm-page-top-frame">
+  <div class="container-fluid wm-top-container">
+    
+    <div class="wm-top-tool pull-right wm-vcenter">
+      <form class="dropdown wm-vcentered" id="wm-search-form" action="./search.html">
         
-      </defs>
-    </svg>
-    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="drawer">
-    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="search">
-    <label class="md-overlay" data-md-component="overlay" for="drawer"></label>
-    
-      <a href="#about" tabindex="1" class="md-skip">
-        Skip to content
-      </a>
-    
-    
-      <header class="md-header" data-md-component="header">
-  <nav class="md-header-nav md-grid">
-    <div class="md-flex">
-      <div class="md-flex__cell md-flex__cell--shrink">
-        <a href="." title="Handover World Heritage GIS" class="md-header-nav__button md-logo">
-          
-            <i class="md-icon"></i>
-          
-        </a>
-      </div>
-      <div class="md-flex__cell md-flex__cell--shrink">
-        <label class="md-icon md-icon--menu md-header-nav__button" for="drawer"></label>
-      </div>
-      <div class="md-flex__cell md-flex__cell--stretch">
-        <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
-          
+        <button id="wm-search-show" class="btn btn-sm btn-default" type="submit"
+          ><i class="fa fa-search" aria-hidden="true"></i></button>
+
+        <div class="input-group input-group-sm wm-top-search">
+          <input type="text" name="q" class="form-control" id="mkdocs-search-query" placeholder="Search">
+          <span class="input-group-btn" role="search">
             
-              <span class="md-header-nav__topic">
-                Handover World Heritage GIS
-              </span>
-              <span class="md-header-nav__topic">
-                Home
-              </span>
-            
-          
+            <button class="btn btn-default dropdown-toggle collapse" data-toggle="dropdown" type="button"><span class="caret"></span></button>
+            <ul id="mkdocs-search-results" class="dropdown-menu dropdown-menu-right"></ul>
+            <button id="wm-search-go" class="btn btn-default" type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
+          </span>
         </div>
-      </div>
-      <div class="md-flex__cell md-flex__cell--shrink">
-        
-          
-            <label class="md-icon md-icon--search md-header-nav__button" for="search"></label>
-            
-<div class="md-search" data-md-component="search" role="dialog">
-  <label class="md-search__overlay" for="search"></label>
-  <div class="md-search__inner" role="search">
-    <form class="md-search__form" name="search">
-      <input type="text" class="md-search__input" name="query" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query" data-md-state="active">
-      <label class="md-icon md-search__icon" for="search"></label>
-      <button type="reset" class="md-icon md-search__icon" data-md-component="reset" tabindex="-1">
-        &#xE5CD;
-      </button>
-    </form>
-    <div class="md-search__output">
-      <div class="md-search__scrollwrap" data-md-scrollfix>
-        <div class="md-search-result" data-md-component="result">
-          <div class="md-search-result__meta">
-            Type to start searching
-          </div>
-          <ol class="md-search-result__list"></ol>
-        </div>
-      </div>
+      </form>
     </div>
+
+    
+    <div class="wm-top-tool wm-vcenter pull-right wm-small-left">
+      <button id="wm-toc-button" type="button" class="btn btn-sm btn-default wm-vcentered"><i class="fa fa-th-list" aria-hidden="true"></i></button>
+    </div>
+
+    
+    
+
+    
+    <a href="" class="wm-top-brand wm-top-link wm-vcenter">
+      
+      <div class="wm-top-title">
+        Handover World Heritage GIS<br>
+        
+      </div>
+    </a>
   </div>
-</div>
-          
-        
-      </div>
-      
-    </div>
-  </nav>
-</header>
+</nav>
+
+  <div id="main-content" class="wm-page-top-frame">
     
-    <div class="md-container">
-      
-        
-      
-      
-      <main class="md-main">
-        <div class="md-main__inner md-grid" data-md-component="container">
-          
-            
-              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
-                <div class="md-sidebar__scrollwrap">
-                  <div class="md-sidebar__inner">
-                    <nav class="md-nav md-nav--primary" data-md-level="0">
-  <label class="md-nav__title md-nav__title--site" for="drawer">
-    <span class="md-nav__button md-logo">
-      
-        <i class="md-icon"></i>
-      
-    </span>
-    Handover World Heritage GIS
-  </label>
+<nav class="wm-toc-pane">
   
-  <ul class="md-nav__list" data-md-scrollfix>
-    
-      
-      
-      
-
-  
-
-
-  <li class="md-nav__item md-nav__item--active">
-    
-    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="toc">
-    
-      
-    
-    
-    <a href="." title="Home" class="md-nav__link md-nav__link--active">
-      Home
-    </a>
-    
-  </li>
-
-    
-      
-      
-      
-
-
-  <li class="md-nav__item">
-    <a href="world-heritage-database/" title="Database" class="md-nav__link">
-      Database
-    </a>
-  </li>
-
-    
-      
-      
-      
-
-
-  <li class="md-nav__item">
-    <a href="comparative-analysis/" title="Comparative analysis" class="md-nav__link">
-      Comparative analysis
-    </a>
-  </li>
-
-    
-      
-      
-      
-
-
-  <li class="md-nav__item">
-    <a href="geoprocessing/" title="Geoprocessing" class="md-nav__link">
-      Geoprocessing
-    </a>
-  </li>
-
-    
-      
-      
-      
-
-
-  <li class="md-nav__item">
-    <a href="world-heritage-knowledge-lab/" title="World Heritage Analyses" class="md-nav__link">
-      World Heritage Analyses
-    </a>
-  </li>
-
-    
-      
-      
-      
-
-
-  <li class="md-nav__item">
-    <a href="world-heritage-outlook/" title="World Heritage Outlook" class="md-nav__link">
-      World Heritage Outlook
-    </a>
-  </li>
-
-    
-      
-      
-      
-
-
-  <li class="md-nav__item">
-    <a href="datasheet/" title="Datasheet" class="md-nav__link">
-      Datasheet
-    </a>
-  </li>
-
-    
-      
-      
-      
-
-
-  <li class="md-nav__item">
-    <a href="presentation/" title="Presentation" class="md-nav__link">
-      Presentation
-    </a>
-  </li>
-
-    
-      
-      
-      
-
-
-  <li class="md-nav__item">
-    <a href="folder-structure/" title="Folder structure" class="md-nav__link">
-      Folder structure
-    </a>
-  </li>
-
-    
+  <ul class="wm-toctree">
+        <li class="wm-toc-li wm-toc-lev1 "><a href="." class="wm-article-link wm-toc-text">Home</a>
+</li>
+        <li class="wm-toc-li wm-toc-lev1 "><a href="world-heritage-database/" class="wm-article-link wm-toc-text">Database</a>
+</li>
+        <li class="wm-toc-li wm-toc-lev1 "><a href="comparative-analysis/" class="wm-article-link wm-toc-text">Comparative analysis</a>
+</li>
+        <li class="wm-toc-li wm-toc-lev1 "><a href="geoprocessing/" class="wm-article-link wm-toc-text">Geoprocessing</a>
+</li>
+        <li class="wm-toc-li wm-toc-lev1 "><a href="world-heritage-knowledge-lab/" class="wm-article-link wm-toc-text">World Heritage Analyses</a>
+</li>
+        <li class="wm-toc-li wm-toc-lev1 "><a href="world-heritage-outlook/" class="wm-article-link wm-toc-text">World Heritage Outlook</a>
+</li>
+        <li class="wm-toc-li wm-toc-lev1 "><a href="datasheet/" class="wm-article-link wm-toc-text">Datasheet</a>
+</li>
+        <li class="wm-toc-li wm-toc-lev1 "><a href="presentation/" class="wm-article-link wm-toc-text">Presentation</a>
+</li>
+        <li class="wm-toc-li wm-toc-lev1 "><a href="folder-structure/" class="wm-article-link wm-toc-text">Folder structure</a>
+</li>
   </ul>
 </nav>
-                  </div>
-                </div>
-              </div>
-            
-            
-              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
-                <div class="md-sidebar__scrollwrap">
-                  <div class="md-sidebar__inner">
-                    
-<nav class="md-nav md-nav--secondary">
-  
-  
+
+    <div class="wm-content-pane">
+      <iframe class="wm-article" name="article"></iframe>
+    </div>
+  </div>
+
+<div class="container-fluid wm-page-content">
     
-  
-  
-</nav>
-                  </div>
-                </div>
-              </div>
-            
-          
-          <div class="md-content">
-            <article class="md-content__inner md-typeset">
-              
-                
-                
-                <h1 id="about">About</h1>
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="world-heritage-database/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="world-heritage-database/" class="btn btn-xs btn-link">
+        Database
+      </a>
+    </div>
+    
+  </div>
+
+    
+
+    <h1 id="about">About</h1>
 <p>This is the last project I undertake at IUCN's World Heritage Programme. </p>
 <p>I intend to document important work in the past seven years in order to pass on necessary information to the team. Apart from the usual 'where to find things', I also took the liberty to include high-level explanations of current projects, datasets, tools and methodologies, and in some cases with significant details if deemed useful or has not been documented elsewhere.</p>
 <p>The reasons I chose to use a web format in organising the handover content are two folds. First and foremost, it does a fabulously better job in searching - with frictionless access, I hope the my handover is not only useful, but <strong>usable and used</strong>. Second, I embrace the idea of <a href="https://en.wikipedia.org/wiki/Open_knowledge">open knowledge</a> in that the free access to knowledge is a good thing as it benefits all. I will not document any materials in this handover that may be a breach of confidentiality or represent a conflict of interest. My work builds on and benefits from those who share their knowledge in the public domain, and I feel compelled to do the same.</p>
@@ -319,68 +158,34 @@
 </ol>
 <h1 id="acknowledgement">Acknowledgement</h1>
 <p>I would also like to take this opportunity to thank Tim and Naomi for their oversight and mentoring, and for making the secondment arrangement a success. Thanks also go to the two wonderful teams at IUCN (<a href="https://www.iucn.org/theme/world-heritage/contact">World Heritage Programme</a>) and at UNEP-WCMC (<a href="https://www.unep-wcmc.org/employees#11">Protected Areas Programme</a>), and to many colleagues I have worked with during the long seven years. I hope to remain in touch with you all and I wish you all the very best in 2018 and onwards.</p>
-                
-                  
-                
-              
-              
-                
-              
-            </article>
-          </div>
-        </div>
-      </main>
-      
-        
-<footer class="md-footer">
-  
-    <div class="md-footer-nav">
-      <nav class="md-footer-nav__inner md-grid">
-        
-        
-          <a href="world-heritage-database/" title="Database" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
-            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
-              <span class="md-flex__ellipsis">
-                <span class="md-footer-nav__direction">
-                  Next
-                </span>
-                Database
-              </span>
-            </div>
-            <div class="md-flex__cell md-flex__cell--shrink">
-              <i class="md-icon md-icon--arrow-forward md-footer-nav__button"></i>
-            </div>
-          </a>
-        
-      </nav>
+
+  <br>
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="world-heritage-database/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="world-heritage-database/" class="btn btn-xs btn-link">
+        Database
+      </a>
     </div>
-  
-  <div class="md-footer-meta md-typeset">
-    <div class="md-footer-meta__inner md-grid">
-      <div class="md-footer-copyright">
-        
-        powered by
-        <a href="http://www.mkdocs.org">MkDocs</a>
-        and
-        <a href="https://squidfunk.github.io/mkdocs-material/">
-          Material for MkDocs</a>
-      </div>
-      
-        
-      
-    </div>
+    
   </div>
+
+    <br>
+</div>
+
+<footer class="col-md-12 wm-page-content">
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
 </footer>
-      
-    </div>
-    
-      <script src="./assets/javascripts/application.f041762f.js"></script>
-      
-      <script>app.initialize({version:"0.17.2",url:{base:"."}})</script>
-      
-    
-    
-      
-    
-  </body>
+
+</body>
 </html>
+<!--
+MkDocs version : 0.17.2
+Build Date UTC : 2018-03-20 10:05:53
+-->
