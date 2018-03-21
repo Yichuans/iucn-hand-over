@@ -32,8 +32,6 @@
       var is_top_frame = false;
         
         var pageToc = [
-          {title: "History", url: "#history", children: [
-          ]},
           {title: "Technical architecture", url: "#technical-architecture", children: [
           ]},
           {title: "Administration", url: "#administration", children: [
@@ -86,13 +84,7 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 
     
 
-    <h1 id="history">History</h1>
-<p>I built the first prototype of the Outlook assessment module in Python (Web2Py framework) in early 2012, as proof of concept. The underlying principle is to store the results of assessment in a database so that it could be managed and analysed more easily and effectively. A database approach is the only way to systematically manage the data the project generates.</p>
-<p>For the development, RSMI was commissioned to undertake the design, implementation and maintenance of the three modules: assessment, site information, and front-end website for showcasing findings. In hindsight, it was an unrealistic ambition with impossible funds, but at the time the can-do spirit prevailed and I was technically in-mature and inexperienced as to make do with developing everything, rather than checking reality and focusing on the minimally viable product.</p>
-<p>It was not a success I had hoped for - part of the reason being that the roles were never clear. I think I was given the role of project management, yet I had no power in making design choices nor allocate funds. My role became that of an inefficient intermediate. During the development process, I led numerous consultations with the team during each milestone, and had constant struggles to accommodate opinions and then feed to the developers. The decision making process was unnecessarily long and painful at times.</p>
-<p>Despite the hiccups and constant compromises along the way, a product was developed with all modules, albeit late. The database played a major role to fulfilling the requirement of data analysis. I built the pipelines from database dumps to queries that output assessments, and then turn into usable formats. They powered the first Outlook report.</p>
-<p>My role in the second development is technical advisory and I am not involved in the daily management of the development.</p>
-<h1 id="technical-architecture">Technical architecture</h1>
+    <h1 id="technical-architecture">Technical architecture</h1>
 <p>The assessment module was written in Java, a custom-made system that accepts assessments via the web interface and store in a PostgreSQL database. The user facing front end website displays results of assessment and was implemented in Liferay, which during the second development changed to a Drupal based system (written in PHP).</p>
 <p>At the moment, there is a disconnection between the two systems: backend assessment and frontend display. The assessment module (backend) and the old website (frontend display) are on one Amazon EC2 instance (instance name: 'IUCN WHP WHO') and the new, updated website resides another (instance name: 'IUCN WHO V2'). The new website used a database dump to migrate content from the old system. By design, the pipeline built by EDW does not reverse the flow of data in the other direction.</p>
 <p>The source codes for the systems can be found on <a href="https://github.com/iucn-whp">GitHub</a></p>
