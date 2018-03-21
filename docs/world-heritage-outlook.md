@@ -1,15 +1,3 @@
-# History
-
-I built the first prototype of the Outlook assessment module in Python (Web2Py framework) in early 2012, as proof of concept. The underlying principle is to store the results of assessment in a database so that it could be managed and analysed more easily and effectively. A database approach is the only way to systematically manage the data the project generates.
-
-For the development, RSMI was commissioned to undertake the design, implementation and maintenance of the three modules: assessment, site information, and front-end website for showcasing findings. In hindsight, it was an unrealistic ambition with impossible funds, but at the time the can-do spirit prevailed and I was technically in-mature and inexperienced as to make do with developing everything, rather than checking reality and focusing on the minimally viable product.
-
-It was not a success I had hoped for - part of the reason being that the roles were never clear. I think I was given the role of project management, yet I had no power in making design choices nor allocate funds. My role became that of an inefficient intermediate. During the development process, I led numerous consultations with the team during each milestone, and had constant struggles to accommodate opinions and then feed to the developers. The decision making process was unnecessarily long and painful at times.
-
-Despite the hiccups and constant compromises along the way, a product was developed with all modules, albeit late. The database played a major role to fulfilling the requirement of data analysis. I built the pipelines from database dumps to queries that output assessments, and then turn into usable formats. They powered the first Outlook report.
-
-My role in the second development is technical advisory and I am not involved in the daily management of the development.
-
 # Technical architecture
 
 The assessment module was written in Java, a custom-made system that accepts assessments via the web interface and store in a PostgreSQL database. The user facing front end website displays results of assessment and was implemented in Liferay, which during the second development changed to a Drupal based system (written in PHP).
