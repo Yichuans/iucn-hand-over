@@ -87,17 +87,6 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 <p>It was originally built to power the comparative analyses, but at the same time serves as a pipeline to other formats, for example, for inclusion in the WDPA, shapefile/geodatabase feature class, the <a href="https://wcmc.io/world-heritage-data">World Heritage Feature service</a>(via data dumps)</p>
 <p>The management of the database is noticeably different from other datasets in the WDPA. Rather than using the proprietary esri ArcGIS suite, it sits in an open source enterprise database <a href="https://www.postgresql.org">PostgreSQL</a> with the <a href="http://postgis.org">PostGIS</a> spatial extension. The key benefit, apart from having no lock-in or dependency on expensive commercial software, is that the data can be managed in an industry standard way, and freely, using the SQL language.</p>
 <h1 id="postgresql-database">PostgreSQL database</h1>
-<p>This section explains the technical details of the database.</p>
-<p>Technical specification:</p>
-<ul>
-<li>Software: PostgreSQL 9.1.14 and PostGIS 1.5 (up since 2013?)</li>
-<li>Server: WCMC-PC-01918</li>
-<li>Port: 5432</li>
-<li>Database: whs_v2</li>
-<li>Schema: sde, arcgis</li>
-<li>Username: postgres</li>
-<li>Password: (see email)</li>
-</ul>
 <p>Unfortunately, being only a database, PostgreSQL/PostGIS does not have a GUI(graphic user interface) that allow read, create, update or delete spatial data, essential tasks for a GIS, which ArcGIS excels in.</p>
 <p>To make the best of two worlds, a compromised solution was engineered to allow ArcGIS to interface with the underlying database. It was not an easy solution back in the days and some of the <a href="http://desktop.arcgis.com/en/arcmap/10.3/manage-data/gdbs-in-postgresql/data-types-postgresql.htm">techniques</a> may have become obsolete over time. There are probably better options these days - therefore I intend not to complicate matters by explaining <em>how to set up</em> the system as is, but rather focusing on <em>how to use</em> the system.</p>
 <p>Here are the guiding principles when using the database.</p>

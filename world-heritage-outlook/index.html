@@ -34,8 +34,6 @@
         var pageToc = [
           {title: "Technical architecture", url: "#technical-architecture", children: [
           ]},
-          {title: "Administration", url: "#administration", children: [
-          ]},
           {title: "Database dump", url: "#database-dump", children: [
           ]},
           {title: "Convert to Access database", url: "#convert-to-access-database", children: [
@@ -88,27 +86,6 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 <p>The assessment module was written in Java, a custom-made system that accepts assessments via the web interface and store in a PostgreSQL database. The user facing front end website displays results of assessment and was implemented in Liferay, which during the second development changed to a Drupal based system (written in PHP).</p>
 <p>At the moment, there is a disconnection between the two systems: backend assessment and frontend display. The assessment module (backend) and the old website (frontend display) are on one Amazon EC2 instance (instance name: 'IUCN WHP WHO') and the new, updated website resides another (instance name: 'IUCN WHO V2'). The new website used a database dump to migrate content from the old system. By design, the pipeline built by EDW does not reverse the flow of data in the other direction.</p>
 <p>The source codes for the systems can be found on <a href="https://github.com/iucn-whp">GitHub</a></p>
-<h1 id="administration">Administration</h1>
-<p>As mentioned previously, the assessment module and the front facing website displaying results of assessment are hosted by Amazon (Amazon Web Services, AWS), and the servers are known as EC2 instances or servers. The old and new websites are of the type 'medium' (used to describe the capacity of the server or instance), physically in the 'eu-west-1a' region (in Ireland). Additionally, there is a 'micro' instance for the developers called 'IUCN WHO test', who used it for development and testing. It was decided that this 'micro instance' will be kept for future use.</p>
-<p><img alt="ec2" src="../img/ec2.png" /></p>
-<p>The two additional 'micro' instances are used for hosting 1) the prototype of the World Heritage comparative analysis , 'WH CA' (seed funding from UNESCO WHC) and 2) some prototypes on the World Heritage Analyses, 'WH APP'. </p>
-<p>In order to access these instances with SSH, you will need 'private keys'. The keys are located at (WCMC-PC-01918)</p>
-<ul>
-<li><a href="E:\Yichuan\Yichuan\amazon_putty_ssh">E:\Yichuan\Yichuan\amazon_putty_ssh</a></li>
-</ul>
-<p>The keys may be revoked in the <a href="https://aws.amazon.com">AWS management console</a>. The login credentials are:</p>
-<ul>
-<li>Yichuan.shi@iucn.org</li>
-<li>(see email)</li>
-</ul>
-<p>You may copy and send 'keys' to developers so that they have access to the servers, however, I would highly recommend <strong>not</strong> giving external people access to our Amazon AWS account.</p>
-<p>The management of the instances are beyond the scope of this documentation. The below are the most commonly used features and should be self-explanatory:</p>
-<ul>
-<li>create new instances</li>
-<li>the IP address of the instance (address for access)</li>
-<li>the private keys (key for access)</li>
-<li>the ports that need to be open (TCP22 for SSH, and TCP80 and 443 for HTTP/S)</li>
-</ul>
 <h1 id="database-dump">Database dump</h1>
 <p>One of the key functions of the system(s) is to enable the extraction and analysis of information for the World Heritage Outlook report. For that purpose, it is important to obtain a <strong>copy</strong> of the dataset of the live database (the one behind the website, but <strong>never</strong> work directly on the live database itself!). This is called a database dump.</p>
 <p>For security reasons, you will need to SSH tunnel to the instance and forward the remote port to a local one. There is a saved session called <code>WHO_backend</code> that contains necessary connection parameters, including those to forward the remote 5432 port (the database port) to the local 5433 port. </p>
