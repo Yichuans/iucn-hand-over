@@ -1,4 +1,4 @@
-Prior to 2016, all presentations are stored on the workstation (WCMC-PC-01918.internal.wcmc):
+Prior to 2016, all presentations are stored on the workstation
 
 - [E:\Yichuan\Yichuan\presentations](E:\Yichuan\Yichuan\presentations)
 

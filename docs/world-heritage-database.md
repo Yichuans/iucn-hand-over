@@ -8,18 +8,6 @@ The management of the database is noticeably different from other datasets in th
 
 # PostgreSQL database
 
-This section explains the technical details of the database.
-
-Technical specification:
-
-- Software: PostgreSQL 9.1.14 and PostGIS 1.5 (up since 2013?)
-- Server: WCMC-PC-01918
-- Port: 5432
-- Database: whs_v2
-- Schema: sde, arcgis
-- Username: postgres
-- Password: (see email)
-
 Unfortunately, being only a database, PostgreSQL/PostGIS does not have a GUI(graphic user interface) that allow read, create, update or delete spatial data, essential tasks for a GIS, which ArcGIS excels in.
 
 To make the best of two worlds, a compromised solution was engineered to allow ArcGIS to interface with the underlying database. It was not an easy solution back in the days and some of the [techniques](http://desktop.arcgis.com/en/arcmap/10.3/manage-data/gdbs-in-postgresql/data-types-postgresql.htm) may have become obsolete over time. There are probably better options these days - therefore I intend not to complicate matters by explaining *how to set up* the system as is, but rather focusing on *how to use* the system.

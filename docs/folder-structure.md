@@ -1,4 +1,4 @@
-The content is located at [E:\Yichuan](E:\Yichuan), on the workstation (WCMC-PC-01918.internal.wcmc)
+The content is located at [E:\Yichuan](E:\Yichuan)
 
 Most of my content is organised into folders with the names of collaborators or those who requested help. This is the highest level. Within this level, project files can be found if this is a one-off request; or folders, each representing a single project. 
 

@@ -6,32 +6,6 @@ At the moment, there is a disconnection between the two systems: backend assessm
 
 The source codes for the systems can be found on [GitHub](https://github.com/iucn-whp)
 
-# Administration
-
-As mentioned previously, the assessment module and the front facing website displaying results of assessment are hosted by Amazon (Amazon Web Services, AWS), and the servers are known as EC2 instances or servers. The old and new websites are of the type 'medium' (used to describe the capacity of the server or instance), physically in the 'eu-west-1a' region (in Ireland). Additionally, there is a 'micro' instance for the developers called 'IUCN WHO test', who used it for development and testing. It was decided that this 'micro instance' will be kept for future use.
-
-![ec2](./img/ec2.png)
-
-The two additional 'micro' instances are used for hosting 1) the prototype of the World Heritage comparative analysis , 'WH CA' (seed funding from UNESCO WHC) and 2) some prototypes on the World Heritage Analyses, 'WH APP'. 
-
-In order to access these instances with SSH, you will need 'private keys'. The keys are located at (WCMC-PC-01918)
-
-- [E:\Yichuan\Yichuan\amazon_putty_ssh](E:\Yichuan\Yichuan\amazon_putty_ssh)
-
-The keys may be revoked in the [AWS management console](https://aws.amazon.com). The login credentials are:
-
-- Yichuan.shi@iucn.org
-- (see email)
-
-You may copy and send 'keys' to developers so that they have access to the servers, however, I would highly recommend **not** giving external people access to our Amazon AWS account.
-
-The management of the instances are beyond the scope of this documentation. The below are the most commonly used features and should be self-explanatory:
-
-- create new instances
-- the IP address of the instance (address for access)
-- the private keys (key for access)
-- the ports that need to be open (TCP22 for SSH, and TCP80 and 443 for HTTP/S)
-
 # Database dump
 
 One of the key functions of the system(s) is to enable the extraction and analysis of information for the World Heritage Outlook report. For that purpose, it is important to obtain a **copy** of the dataset of the live database (the one behind the website, but **never** work directly on the live database itself!). This is called a database dump.
