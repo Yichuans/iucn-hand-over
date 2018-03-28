@@ -93,8 +93,6 @@ Create a new data source, here you'll need to specify the details of the newly '
 
 # Analysis
 
-The analysis is fully documented below:
-
-- [Analysis of World Heritage Outlook assessment](http://nbviewer.jupyter.org/github/Yichuans/world-heritage-outlook-analysis/blob/master/analysis.ipynb)
+Please refer to past emails regarding the analysis.
 
 
